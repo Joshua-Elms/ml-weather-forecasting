@@ -169,3 +169,11 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# mac only
+.DS_Store
+
+# grib files
+*.grib2
+*.grib2.idx
+*.grib2.*.idx
