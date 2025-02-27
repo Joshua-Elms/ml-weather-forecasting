@@ -8,7 +8,7 @@ def object_fmt(init_time, sfc_or_prs, fcst_hr):
     return part1 + part2
 
 init_time = datetime(year=2021, month=1, day=1, hour=0)
-fcst_hr = 1
+fcst_hr = 18
 bucket = "noaa-hrrr-bdp-pds"
 sfc_or_prs = 'sfc' # sfc or prs
 typeOfLevel = 'surface' if sfc_or_prs == 'sfc' else 'isobaricInhPa'
