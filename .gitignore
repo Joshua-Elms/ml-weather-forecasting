@@ -177,3 +177,6 @@ cython_debug/
 *.grib2
 *.grib2.idx
 *.grib2.*.idx
+
+# ignored data folder
+data/

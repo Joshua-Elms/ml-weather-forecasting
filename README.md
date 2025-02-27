@@ -35,3 +35,6 @@ This project aims to provide accurate weather forecasting using machine learning
 2. `hrrr_downloader.py` can be used to download one grib2 file
 
 3. `hrrr_reader.py` will extract the desired variables from a grib2 file into an `xarray.Dataset`
+
+## Notebook
+Very simple MOS demo at `mos_demo.ipynb`. Observational data file can be found at this [link](https://drive.google.com/file/d/1uSzsHb4EQcn9_oV4XFVvdvkU4Y-wXXg7/view?usp=sharing)
