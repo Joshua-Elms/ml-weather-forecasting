@@ -1,8 +1,9 @@
 import boto3
+import os
 from datetime import datetime, timedelta
 from botocore import UNSIGNED
 from botocore.config import Config
-
+'''
 def object_fmt(init_time, sfc_or_prs, fcst_hr):
     part1 = f"hrrr.{init_time.strftime('%Y%m%d')}/conus/"
     part2 = f"hrrr.t{init_time.hour:02}z.wrf{sfc_or_prs}f{fcst_hr:02}.grib2"
@@ -42,7 +43,7 @@ for j in range(3,18):
             s3.download_file(bucket, obj + ".idx", save_path + ".idx")
 
         print(f"Downloaded {obj} & *.idx to {save_path}")
-
+'''
 #Testing 
 
 def object_fmt(init_time, sfc_or_prs, fcst_hr):
@@ -50,7 +51,10 @@ def object_fmt(init_time, sfc_or_prs, fcst_hr):
     part2 = f"hrrr.t{init_time.hour:02}z.wrf{sfc_or_prs}f{fcst_hr:02}.grib2"
     return part1 + part2
 
-def download_hrrr_data(start_date, end_date, init_hours, fcst_hours, sfc_or_prs='sfc', bucket='noaa-hrrr-bdp-pds', get_idx=True):
+def download_hrrr_data(start_date, end_date, init_hours, fcst_hours, sfc_or_prs='sfc', bucket='noaa-hrrr-bdp-pds', get_idx=True, save_dir='hrrr_data'):
+    # Create save directory if it doesn't exist
+    os.makedirs(save_dir, exist_ok=True)
+    
     s3 = boto3.client('s3', config=Config(signature_version=UNSIGNED))
     current_date = start_date
     while current_date <= end_date:
@@ -58,12 +62,27 @@ def download_hrrr_data(start_date, end_date, init_hours, fcst_hours, sfc_or_prs=
             init_time = datetime(current_date.year, current_date.month, current_date.day, init_hour)
             for fcst_hr in fcst_hours:
                 obj = object_fmt(init_time, sfc_or_prs, fcst_hr)
-                save_path = f"{init_time.strftime('%Y%m%d_%H')}z_f{fcst_hr:02}_{sfc_or_prs}.grib2"
+                # Construct full save path including directory
+                save_filename = f"{init_time.strftime('%Y%m%d_%H')}z_f{fcst_hr:02}_{sfc_or_prs}.grib2"
+                save_path = os.path.join(save_dir, save_filename)
                 try:
                     s3.download_file(bucket, obj, save_path)
                     if get_idx:
-                        s3.download_file(bucket, obj + ".idx", save_path + ".idx")
+                        idx_save_path = os.path.join(save_dir, save_filename + ".idx")
+                        s3.download_file(bucket, obj + ".idx", idx_save_path)
                     print(f"Downloaded {obj} & *.idx to {save_path}")
                 except Exception as e:
                     print(f"Error downloading {obj}: {e}")
         current_date += timedelta(days=1)
+#Training
+start_date = datetime(2021, 3, 1)
+end_date = datetime(2021, 6, 1)
+init_times = [0]
+fcst_hours = range(0,25)
+download_hrrr_data(start_date, end_date, init_times, fcst_hours)
+#Testing
+#start_date = datetime(2021, 3, 1)
+#end_date = datetime(2021, 3, 1)
+#init_times = [0]
+#fcst_hours = range(0,1)
+#download_hrrr_data(start_date, end_date, init_times, fcst_hours, save_dir='mod_testing')
