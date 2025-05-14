@@ -75,14 +75,43 @@ def download_hrrr_data(start_date, end_date, init_hours, fcst_hours, sfc_or_prs=
                     print(f"Error downloading {obj}: {e}")
         current_date += timedelta(days=1)
 #Training
-start_date = datetime(2021, 3, 1)
-end_date = datetime(2021, 6, 1)
+#start_date = datetime(2021, 3, 1)
+#end_date = datetime(2021, 6, 1)
+#init_times = [0]
+#fcst_hours = range(0,25)
+#download_hrrr_data(start_date, end_date, init_times, fcst_hours)
+
+#Testing Jan 5-6 2025 Winter Storm
+#start_date = datetime(2025, 1, 5)
+#end_date = datetime(2021, 1, 6)
+#init_times = [0]
+#fcst_hours = range(0,25)
+#download_hrrr_data(start_date, end_date, init_times, fcst_hours, save_dir='mod_testing')
+
+#Testing Jun 18-19 2021 Storm Complex
+#start_date = datetime(2021, 6, 18)
+#end_date = datetime(2021, 6, 19)
+#init_times = [0]
+#fcst_hours = range(0,25)
+#download_hrrr_data(start_date, end_date, init_times, fcst_hours, save_dir='mod_testing')
+
+#Testing Jan 31- Feb 2 2011 Winter Storm (Groundhog day blizzard)
+#start_date = datetime(2011, 1, 31)
+#end_date = datetime(2011, 2, 2)
+#init_times = [0]
+#fcst_hours = range(0,25)
+#download_hrrr_data(start_date, end_date, init_times, fcst_hours, save_dir='mod_testing')
+
+#Testing Dec 22 2022 Winter Storm
+#start_date = datetime(2022, 12, 22)
+#end_date = datetime(2022, 12, 22)
+#init_times = [0]
+#fcst_hours = range(0,25)
+#download_hrrr_data(start_date, end_date, init_times, fcst_hours, save_dir='mod_testing')
+
+#Testing Mar 31- Apr 1 2023 Tornado Outbreak
+start_date = datetime(2023, 3, 31)
+end_date = datetime(2023, 4, 1)
 init_times = [0]
 fcst_hours = range(0,25)
-download_hrrr_data(start_date, end_date, init_times, fcst_hours)
-#Testing
-#start_date = datetime(2021, 3, 1)
-#end_date = datetime(2021, 3, 1)
-#init_times = [0]
-#fcst_hours = range(0,1)
-#download_hrrr_data(start_date, end_date, init_times, fcst_hours, save_dir='mod_testing')
+download_hrrr_data(start_date, end_date, init_times, fcst_hours, save_dir='mod_testing')
